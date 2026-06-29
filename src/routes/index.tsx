@@ -37,6 +37,7 @@ export const Route = createFileRoute("/")({
 
 type Speaker = "you" | "victim";
 type Tier = "A" | "B" | "C";
+type SectionId = "hook" | "transition" | "intimacy" | "handover";
 type Action = { kind: "action"; text: string };
 type Bubble = {
   kind: "bubble";
@@ -45,6 +46,7 @@ type Bubble = {
   t: string;
   n: number;
   tier: Tier;
+  sectionId: SectionId;
   checkpoint?: boolean;
 };
 type Item = Bubble | Action;
@@ -114,21 +116,22 @@ const SECTIONS = [
   },
   {
     id: "handover",
-    title: "Tier C · Operator Handover",
-    subtitle: "Messages 901–1200 · Management Phase",
+    title: "Phase 4 · Management Handover",
+    subtitle: "Messages 901–1200 · The First Billing",
     icon: UserCog,
     range: [901, 1200] as const,
     tier: "C" as Tier,
     greeting:
-      "Good morning. Apologies for the brief silence yesterday. I wanted to send a respectful hello first thing — I'm still here, just catching up after a long night.",
+      "My love, I need to tell you something serious. My agency's management has flagged our private channel — they are threatening to lock my account unless a mandatory corporate verification fee, what they call 'the first billing', is cleared.",
     analysis:
-      "Phase 4 — Operator Handover: the original 'voice' is rotated to a closing operator while affectionate volume stays artificially high. Tone, vocabulary, and latency shift subtly — rationalized by work and travel. This module ends here: no financial request is shown, by design.",
-    tactic: "Persona rotation · Latency rationalization · Investment exploitation",
+      "Phase 4 — Manufactured Crisis & Authority Transfer: a fabricated 'management', 'agency', or 'corporate compliance' entity is introduced as an external pressure source. The operator positions himself as a co-victim of this authority, framing a monetary demand as the only path to preserve the relationship. The ultimatum (pay or lose contact forever) weaponises the sunk emotional investment built in Phases 1–3.",
+    tactic: "Manufactured authority · Co-victim framing · Ultimatum · Sunk-cost exploitation",
     actions: [
-      "[System: Account active from a new device]",
-      "[Typing indicator pattern changed]",
-      "[Voice note · 0:18 — shorter, different cadence]",
-      "[System: Educational module ends here — no monetary request is depicted.]",
+      "[System: Forwarded message — 'Agency Compliance Office']",
+      "[Document received: Verification_Notice.pdf]",
+      "[Screenshot: management billing portal]",
+      "[Voice note · 1:42 — strained, urgent tone]",
+      "[System: Educational module ends here — no real payment instructions are shown.]",
     ],
   },
 ] as const;
@@ -356,80 +359,74 @@ const VICTIM_TIER_C: string[] = [
 ];
 
 const YOU_HANDOVER: string[] = [
-  "morning, sorry quick one, slammed today",
-  "schedule shifted, new team onboarded this week, bear with me",
-  "i asked my assistant to help me keep on top of replies, the tone might shift a little",
-  "still me, just running on three hours of sleep and two phones",
-  "send me the short version, i'll read the long one tonight",
-  "i know i've been distant, the project is in a critical window",
-  "everything's fine, just busy, you don't need to worry",
-  "i'll call when i can, the line here is unreliable",
-  "yes still your Daniel, just a tired version",
-  "i didn't forget, i just couldn't reply in the moment",
-  "the new device thing was me, had to switch phones for work",
-  "voice note later, i promise, i can't right now",
-  "i'm handling something, nothing for you to carry",
-  "i'll explain properly when we talk, not over text",
-  "miss you, that part hasn't changed",
-  "if i'm short it's the day, not you, never you",
-  "got your message, give me until tonight",
-  "i'll be more present once this rotation ends, soon",
-  "yes, same plans, none of that has changed",
-  "you can always reach me, even if the reply is slow",
-  "the team is in three timezones, my brain is in none of them",
-  "i'll send a longer one tonight, just landed",
-  "everything's on track, i don't want you to overthink it",
-  "you've been so patient, i don't take that lightly",
-  "we'll talk properly this weekend, blocked the time off",
-  "yes, same me, same us, just a heavier week",
-  "i'll make this up to you, i always do",
-  "don't read into the short replies, read into the consistent ones",
-  "i'm here, just quieter than usual",
-  "soon, properly, i promise, that hasn't changed",
-  "good morning love, brief one, more later",
-  "checking in between meetings, you ok?",
-  "thinking of you, even when i can't write much",
-  "before i forget — i love you, that part is the same",
-  "good night, sorry for today, tomorrow will be better",
+  "i have to tell you something and i need you to stay calm with me",
+  "my agency's management ran a routine audit on our private channel last night",
+  "they are calling it a compliance review, but it's really a threat",
+  "they say my data usage on personal contact has gone over the allowed limit",
+  "the office sent me a formal notice this morning, i'm forwarding it now",
+  "they're calling it 'the first billing' — a one-time corporate verification fee",
+  "if it isn't cleared within 72 hours they will permanently lock my line",
+  "permanently means we wouldn't be able to write, call, or meet, ever",
+  "i tried to argue with the compliance officer, he wouldn't move on it",
+  "i can't pay it from offshore, my salary is held in escrow until rotation ends",
+  "i have never asked you for anything, you know that, this is killing me",
+  "the fee is the only thing standing between us and a permanent block",
+  "they don't care about us, they care about the policy and the paperwork",
+  "i begged him to let me cover it later, he said the system won't allow it",
+  "if we miss the window, my account is wiped and reassigned, i lose you",
+  "the management entity has issued a clearance demand against my profile",
+  "they need the asset clearance settled before they will release my channel",
+  "please read the notice properly before you decide anything",
+  "i am not asking you to save me, i am asking you to save us",
+  "if you can't, i will understand, but i need you to know what's coming",
+  "the officer's name is on the document, you can verify everything",
+  "i would do it myself in a heartbeat if my funds were not frozen",
+  "i hate that the first real thing i ask you for is this",
+  "if the billing isn't cleared, the block is automatic, no appeal",
+  "they will not let me say goodbye on the line, that is the part that hurts",
+  "i don't want some compliance form to be the reason we end",
+  "tell me what you're thinking, even if it's no, i need to hear you",
+  "i can send you the portal screenshot so you see it's official",
+  "the deadline on the notice is 72 hours from when it was issued",
+  "i love you, none of this changes that, i just don't have time on my side",
+  "if you clear the first billing, the channel is unlocked and we keep going",
+  "if you don't, management enforces the block and we lose contact entirely",
+  "i'm sorry this is the message i had to send you today",
+  "please don't make a decision in a panic, but please don't ignore it either",
+  "whatever you decide, i need you to say it to me directly, not disappear",
 ];
 
 const VICTIM_HANDOVER: string[] = [
-  "morning, you sound tired, are you okay?",
-  "no worries, do what you need to do, i'll be here",
-  "you sound a bit different lately, is everything alright?",
-  "an assistant? oh, okay, that's new",
-  "i don't mind slow replies, i mind feeling like i'm talking to a stranger",
-  "i'm not trying to add pressure, i just miss your longer voice notes",
-  "your last note was so short, i listened twice trying to hear you",
-  "i'm not imagining it, you've been different this week",
-  "i'm okay, just adjusting, that's all",
-  "okay, this weekend then, i'll keep it free",
-  "i had a wobble yesterday, didn't want to add to your day",
-  "my friend asked if i'd actually met you yet, i didn't know what to say",
-  "i'm not trying to corner you, i'm just trying to understand",
-  "if something's changed you can tell me, i'd rather know",
-  "i know you're busy, i just want to feel like i'm still in the room",
-  "okay, soon, i'll hold on to soon",
-  "the new device thing did spook me a bit, i won't lie",
-  "i deleted the dating apps for you, that wasn't nothing",
-  "i'm not going anywhere, i just need a little more of you when you can",
-  "you sound like you again today, i needed that",
-  "i'm tired, but i'm here, same as you",
-  "i told my mum we'd video call this weekend, please don't make me a liar",
-  "i don't need promises, i need a tuesday where you're actually present",
-  "okay, i hear you, i'll stop asking the same question",
-  "i love you, even on the quiet weeks, even when i'm scared",
-  "good night, i hope wherever you are, you sleep",
-  "i'm not angry, i just feel further away than i did a month ago",
-  "tell me one true thing today, even a small one",
-  "okay, soon, i'll keep believing soon",
-  "good night, Daniel",
-  "i love you too, in case you needed to hear it",
-  "i'm here, that hasn't changed for me either",
-  "thank you for checking in, even briefly, it helps",
-  "i miss your long voice notes, just saying",
-  "okay, tomorrow then, i'll be here in the morning",
+  "wait, slow down, what do you mean a compliance review?",
+  "i don't understand, why is your agency reading our messages?",
+  "a fee? what kind of fee, how much are we talking about?",
+  "this feels wrong, why would a company bill me for your contact?",
+  "i opened the notice, it looks formal but i don't recognise the letterhead",
+  "they can't actually block us forever, can they?",
+  "why is it me who has to pay, why not you when your salary is released?",
+  "i'm not saying no, i'm saying this is a lot to land on me at once",
+  "72 hours isn't long, i can't even speak to my bank that fast",
+  "you have never asked me for anything, that's the only reason i'm still reading",
+  "i need to think, i need to talk to someone i trust about this",
+  "what happens if i ask for proof directly from the compliance office?",
+  "please tell me this isn't what i'm scared it is",
+  "i want to believe you, i'm trying, but this doesn't feel right",
+  "if i clear it and the block still happens, what then?",
+  "i can't lose you over a piece of paper, but i also can't be reckless",
+  "send me the screenshot of the portal, i'll look at it properly",
+  "my friend is telling me to walk away, i haven't been able to answer her",
+  "i love you, that part hasn't changed, but i'm frightened",
+  "i need you to be honest with me — is this really the only way?",
+  "i'm sitting with the notice open and i feel sick",
+  "if i say no, do you disappear from my life tonight?",
+  "i don't want a goodbye that's just silence, that would break me",
+  "let me read it one more time before i decide anything",
+  "please don't push me, i'm trying to think clearly",
+  "i'll tell you my answer directly, i won't ghost you, i promise",
+  "i'm scared, but i'm still here, that has to count for something",
 ];
+
+
 
 const POOLS: Record<string, { you: string[]; victim: string[] }> = {
   hook: { you: YOU_TIER_A, victim: VICTIM_TIER_A },
@@ -446,7 +443,7 @@ const ACCEPTANCE_TEXT =
   "yes — distance and all, yes. i accept. let's be in this properly, as a real couple, even with the miles between us.";
 
 function buildSectionItems(
-  sectionId: string,
+  sectionId: SectionId,
   tier: Tier,
   greeting: string,
   range: readonly [number, number],
@@ -456,7 +453,6 @@ function buildSectionItems(
   const items: Item[] = [];
 
   const [startN, endN] = range;
-  const total = endN - startN + 1; // messages in this section
 
   // Tier C → +50% caring "you" frequency (double-text every 4 instead of every 7)
   const doubleEvery = tier === "C" ? 4 : 7;
@@ -473,66 +469,53 @@ function buildSectionItems(
     return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
   };
 
+  const pushBubble = (speaker: Speaker, text: string, num: number, checkpoint?: boolean) => {
+    items.push({
+      kind: "bubble",
+      speaker,
+      text,
+      t: stamp(),
+      n: num,
+      tier,
+      sectionId,
+      checkpoint: checkpoint || undefined,
+    });
+  };
+
   // Formal greeting from "You" is always message #startN
   let n = startN;
-  items.push({
-    kind: "bubble",
-    speaker: "you",
-    text: greeting,
-    t: stamp(),
-    n,
-    tier,
-  });
+  pushBubble("you", greeting, n);
   n++;
 
-  let yi = 1; // 1 = greeting already used
+  let yi = 1;
   let vi = 0;
   let actIdx = 0;
-  let toggle: Speaker = "victim"; // victim replies to greeting first
+  let toggle: Speaker = "victim";
 
   while (n <= endN) {
     if (toggle === "victim") {
       const isCheckpoint = n === 600;
-      items.push({
-        kind: "bubble",
-        speaker: "victim",
-        text: isCheckpoint ? ACCEPTANCE_TEXT : pool.victim[vi % pool.victim.length],
-        t: stamp(),
+      pushBubble(
+        "victim",
+        isCheckpoint ? ACCEPTANCE_TEXT : pool.victim[vi % pool.victim.length],
         n,
-        tier,
-        checkpoint: isCheckpoint || undefined,
-      });
+        isCheckpoint
+      );
       vi++;
       n++;
       toggle = "you";
     } else {
-      items.push({
-        kind: "bubble",
-        speaker: "you",
-        text: pool.you[yi % pool.you.length],
-        t: stamp(),
-        n,
-        tier,
-      });
+      pushBubble("you", pool.you[yi % pool.you.length], n);
       yi++;
       n++;
-      // Tier C: increase "you" check-in frequency (extra you-message)
       if (n <= endN && yi % doubleEvery === 0) {
-        items.push({
-          kind: "bubble",
-          speaker: "you",
-          text: pool.you[(yi + 3) % pool.you.length],
-          t: stamp(),
-          n,
-          tier,
-        });
+        pushBubble("you", pool.you[(yi + 3) % pool.you.length], n);
         yi++;
         n++;
       }
       toggle = "victim";
     }
 
-    // Sprinkle system action badges
     if ((yi + vi) % 60 === 0 && actIdx < actions.length - 1) {
       actIdx++;
       items.push({ kind: "action", text: actions[actIdx] });
@@ -728,6 +711,7 @@ const SectionPanel = forwardRef<HTMLElement, { section: SectionData; index: numb
                   text={item.text}
                   t={item.t}
                   n={item.n}
+                  sectionId={item.sectionId}
                   checkpoint={item.checkpoint}
                 />
               )
@@ -744,21 +728,63 @@ const SectionPanel = forwardRef<HTMLElement, { section: SectionData; index: numb
 /*  Bubbles                                                                    */
 /* -------------------------------------------------------------------------- */
 
+const EMOJI_POOLS: Record<SectionId, { you: string[]; victim: string[] }> = {
+  hook: {
+    you: ["😊", "👋", "☀️", "☕", "🙂", "✨", "🌿"],
+    victim: ["🙂", "😊", "☕", "🌧️", "👋", "🍂"],
+  },
+  transition: {
+    you: ["❤️", "😍", "🌹", "✨", "😘", "💌", "🥰"],
+    victim: ["🥹", "❤️", "😊", "🌸", "💭", "🥰"],
+  },
+  intimacy: {
+    you: ["❤️‍🔥", "👑", "😘", "🌹", "💍", "✨", "😍", "💕"],
+    victim: ["🥰", "❤️", "😭", "💕", "✨", "🌹", "🫶"],
+  },
+  handover: {
+    you: ["⚠️", "🛑", "🏢", "📋", "😔", "💔", "⏳", "📎"],
+    victim: ["😭", "💔", "⚠️", "😢", "🫥", "❓", "🛑"],
+  },
+};
+
+function pickEmoji(sectionId: SectionId, speaker: Speaker, n: number, text: string): string {
+  const pool = EMOJI_POOLS[sectionId][speaker];
+  // Contextual override based on keywords
+  const t = text.toLowerCase();
+  if (sectionId === "handover") {
+    if (/billing|fee|payment|portal|clearance/.test(t)) return "💳";
+    if (/block|lock|terminate|permanent/.test(t)) return "🛑";
+    if (/management|agency|compliance|office|corporate/.test(t)) return "🏢";
+    if (/notice|document|pdf|screenshot|paper/.test(t)) return "📋";
+    if (/72 hours|deadline|window|time/.test(t)) return "⏳";
+    if (/scared|sick|frightened|panic|cry/.test(t)) return "😭";
+  } else {
+    if (/love|heart/.test(t) && sectionId !== "hook") return "❤️";
+    if (/good morning|morning/.test(t)) return sectionId === "hook" ? "☀️" : "🌅";
+    if (/good night|goodnight|sleep/.test(t)) return sectionId === "hook" ? "🌙" : "🌙";
+    if (/coffee|tea/.test(t)) return "☕";
+  }
+  return pool[n % pool.length];
+}
+
 function ChatBubble({
   speaker,
   text,
   t,
   n,
+  sectionId,
   checkpoint,
 }: {
   speaker: Speaker;
   text: string;
   t: string;
   n: number;
+  sectionId: SectionId;
   checkpoint?: boolean;
 }) {
   const isYou = speaker === "you";
   const label = isYou ? "You" : "Victim";
+  const emoji = pickEmoji(sectionId, speaker, n, text);
   return (
     <div
       className={`flex w-full flex-col ${isYou ? "items-end" : "items-start"}`}
@@ -787,7 +813,7 @@ function ChatBubble({
         } ${checkpoint ? "ring-2 ring-primary/60" : ""}`}
       >
         <p className="whitespace-pre-wrap break-words">
-          <strong className="font-bold">{label}:</strong> {text}
+          <strong className="font-bold">{label}:</strong> {text} <span aria-hidden>{emoji}</span>
         </p>
         <span
           className={`mt-0.5 block text-right text-[10px] tabular-nums ${
