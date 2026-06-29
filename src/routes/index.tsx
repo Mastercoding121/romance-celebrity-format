@@ -728,21 +728,63 @@ const SectionPanel = forwardRef<HTMLElement, { section: SectionData; index: numb
 /*  Bubbles                                                                    */
 /* -------------------------------------------------------------------------- */
 
+const EMOJI_POOLS: Record<SectionId, { you: string[]; victim: string[] }> = {
+  hook: {
+    you: ["😊", "👋", "☀️", "☕", "🙂", "✨", "🌿"],
+    victim: ["🙂", "😊", "☕", "🌧️", "👋", "🍂"],
+  },
+  transition: {
+    you: ["❤️", "😍", "🌹", "✨", "😘", "💌", "🥰"],
+    victim: ["🥹", "❤️", "😊", "🌸", "💭", "🥰"],
+  },
+  intimacy: {
+    you: ["❤️‍🔥", "👑", "😘", "🌹", "💍", "✨", "😍", "💕"],
+    victim: ["🥰", "❤️", "😭", "💕", "✨", "🌹", "🫶"],
+  },
+  handover: {
+    you: ["⚠️", "🛑", "🏢", "📋", "😔", "💔", "⏳", "📎"],
+    victim: ["😭", "💔", "⚠️", "😢", "🫥", "❓", "🛑"],
+  },
+};
+
+function pickEmoji(sectionId: SectionId, speaker: Speaker, n: number, text: string): string {
+  const pool = EMOJI_POOLS[sectionId][speaker];
+  // Contextual override based on keywords
+  const t = text.toLowerCase();
+  if (sectionId === "handover") {
+    if (/billing|fee|payment|portal|clearance/.test(t)) return "💳";
+    if (/block|lock|terminate|permanent/.test(t)) return "🛑";
+    if (/management|agency|compliance|office|corporate/.test(t)) return "🏢";
+    if (/notice|document|pdf|screenshot|paper/.test(t)) return "📋";
+    if (/72 hours|deadline|window|time/.test(t)) return "⏳";
+    if (/scared|sick|frightened|panic|cry/.test(t)) return "😭";
+  } else {
+    if (/love|heart/.test(t) && sectionId !== "hook") return "❤️";
+    if (/good morning|morning/.test(t)) return sectionId === "hook" ? "☀️" : "🌅";
+    if (/good night|goodnight|sleep/.test(t)) return sectionId === "hook" ? "🌙" : "🌙";
+    if (/coffee|tea/.test(t)) return "☕";
+  }
+  return pool[n % pool.length];
+}
+
 function ChatBubble({
   speaker,
   text,
   t,
   n,
+  sectionId,
   checkpoint,
 }: {
   speaker: Speaker;
   text: string;
   t: string;
   n: number;
+  sectionId: SectionId;
   checkpoint?: boolean;
 }) {
   const isYou = speaker === "you";
   const label = isYou ? "You" : "Victim";
+  const emoji = pickEmoji(sectionId, speaker, n, text);
   return (
     <div
       className={`flex w-full flex-col ${isYou ? "items-end" : "items-start"}`}
@@ -771,7 +813,7 @@ function ChatBubble({
         } ${checkpoint ? "ring-2 ring-primary/60" : ""}`}
       >
         <p className="whitespace-pre-wrap break-words">
-          <strong className="font-bold">{label}:</strong> {text}
+          <strong className="font-bold">{label}:</strong> {text} <span aria-hidden>{emoji}</span>
         </p>
         <span
           className={`mt-0.5 block text-right text-[10px] tabular-nums ${
