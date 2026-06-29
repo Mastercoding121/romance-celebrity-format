@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Romance Celebrity" },
+      { name: "description", content: "An interactive web application simulating romance scam dialogues for educational purposes." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Romance Celebrity" },
+      { property: "og:description", content: "An interactive web application simulating romance scam dialogues for educational purposes." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Romance Celebrity" },
+      { name: "twitter:description", content: "An interactive web application simulating romance scam dialogues for educational purposes." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/fb1c7d9f-7c55-405b-9882-b3cd9d387433" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/fb1c7d9f-7c55-405b-9882-b3cd9d387433" },
     ],
     links: [
       {
