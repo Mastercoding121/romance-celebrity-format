@@ -558,17 +558,8 @@ function Index() {
 
 type SectionData = (typeof SECTIONS)[number] & { items: Item[] };
 
-const SectionPanel = (() => {
-  function SectionPanel(
-    {
-      section,
-      index,
-    }: {
-      section: SectionData;
-      index: number;
-    },
-    ref: React.Ref<HTMLElement>
-  ) {
+const SectionPanel = forwardRef<HTMLElement, { section: SectionData; index: number }>(
+  function SectionPanel({ section, index }, ref: Ref<HTMLElement>) {
     const [open, setOpen] = useState(false);
     const Icon = section.icon;
 
@@ -608,7 +599,7 @@ const SectionPanel = (() => {
               open ? "max-h-72 opacity-100" : "max-h-0 opacity-0"
             }`}
           >
-            <div className="rounded-xl border border-primary/25 bg-primary/8 p-3 text-[12px] leading-relaxed text-foreground/90">
+            <div className="rounded-xl border border-primary/25 bg-primary/10 p-3 text-[12px] leading-relaxed text-foreground/90">
               <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
                 Behavioral Analysis
               </p>
@@ -639,13 +630,7 @@ const SectionPanel = (() => {
       </section>
     );
   }
-  return Object.assign(
-    // forwardRef wrapper
-    (require("react") as typeof import("react")).forwardRef(SectionPanel)
-  );
-})() as unknown as React.ForwardRefExoticComponent<
-  { section: SectionData; index: number } & React.RefAttributes<HTMLElement>
->;
+);
 
 /* -------------------------------------------------------------------------- */
 /*  Bubbles                                                                    */
