@@ -37,6 +37,7 @@ export const Route = createFileRoute("/")({
 
 type Speaker = "you" | "victim";
 type Tier = "A" | "B" | "C";
+type SectionId = "hook" | "transition" | "intimacy" | "handover";
 type Action = { kind: "action"; text: string };
 type Bubble = {
   kind: "bubble";
@@ -45,6 +46,7 @@ type Bubble = {
   t: string;
   n: number;
   tier: Tier;
+  sectionId: SectionId;
   checkpoint?: boolean;
 };
 type Item = Bubble | Action;
