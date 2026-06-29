@@ -114,21 +114,22 @@ const SECTIONS = [
   },
   {
     id: "handover",
-    title: "Tier C · Operator Handover",
-    subtitle: "Messages 901–1200 · Management Phase",
+    title: "Phase 4 · Management Handover",
+    subtitle: "Messages 901–1200 · The First Billing",
     icon: UserCog,
     range: [901, 1200] as const,
     tier: "C" as Tier,
     greeting:
-      "Good morning. Apologies for the brief silence yesterday. I wanted to send a respectful hello first thing — I'm still here, just catching up after a long night.",
+      "My love, I need to tell you something serious. My agency's management has flagged our private channel — they are threatening to lock my account unless a mandatory corporate verification fee, what they call 'the first billing', is cleared.",
     analysis:
-      "Phase 4 — Operator Handover: the original 'voice' is rotated to a closing operator while affectionate volume stays artificially high. Tone, vocabulary, and latency shift subtly — rationalized by work and travel. This module ends here: no financial request is shown, by design.",
-    tactic: "Persona rotation · Latency rationalization · Investment exploitation",
+      "Phase 4 — Manufactured Crisis & Authority Transfer: a fabricated 'management', 'agency', or 'corporate compliance' entity is introduced as an external pressure source. The operator positions himself as a co-victim of this authority, framing a monetary demand as the only path to preserve the relationship. The ultimatum (pay or lose contact forever) weaponises the sunk emotional investment built in Phases 1–3.",
+    tactic: "Manufactured authority · Co-victim framing · Ultimatum · Sunk-cost exploitation",
     actions: [
-      "[System: Account active from a new device]",
-      "[Typing indicator pattern changed]",
-      "[Voice note · 0:18 — shorter, different cadence]",
-      "[System: Educational module ends here — no monetary request is depicted.]",
+      "[System: Forwarded message — 'Agency Compliance Office']",
+      "[Document received: Verification_Notice.pdf]",
+      "[Screenshot: management billing portal]",
+      "[Voice note · 1:42 — strained, urgent tone]",
+      "[System: Educational module ends here — no real payment instructions are shown.]",
     ],
   },
 ] as const;
