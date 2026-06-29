@@ -443,7 +443,7 @@ const ACCEPTANCE_TEXT =
   "yes — distance and all, yes. i accept. let's be in this properly, as a real couple, even with the miles between us.";
 
 function buildSectionItems(
-  sectionId: string,
+  sectionId: SectionId,
   tier: Tier,
   greeting: string,
   range: readonly [number, number],
@@ -453,7 +453,6 @@ function buildSectionItems(
   const items: Item[] = [];
 
   const [startN, endN] = range;
-  const total = endN - startN + 1; // messages in this section
 
   // Tier C → +50% caring "you" frequency (double-text every 4 instead of every 7)
   const doubleEvery = tier === "C" ? 4 : 7;
@@ -470,66 +469,53 @@ function buildSectionItems(
     return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
   };
 
+  const pushBubble = (speaker: Speaker, text: string, num: number, checkpoint?: boolean) => {
+    items.push({
+      kind: "bubble",
+      speaker,
+      text,
+      t: stamp(),
+      n: num,
+      tier,
+      sectionId,
+      checkpoint: checkpoint || undefined,
+    });
+  };
+
   // Formal greeting from "You" is always message #startN
   let n = startN;
-  items.push({
-    kind: "bubble",
-    speaker: "you",
-    text: greeting,
-    t: stamp(),
-    n,
-    tier,
-  });
+  pushBubble("you", greeting, n);
   n++;
 
-  let yi = 1; // 1 = greeting already used
+  let yi = 1;
   let vi = 0;
   let actIdx = 0;
-  let toggle: Speaker = "victim"; // victim replies to greeting first
+  let toggle: Speaker = "victim";
 
   while (n <= endN) {
     if (toggle === "victim") {
       const isCheckpoint = n === 600;
-      items.push({
-        kind: "bubble",
-        speaker: "victim",
-        text: isCheckpoint ? ACCEPTANCE_TEXT : pool.victim[vi % pool.victim.length],
-        t: stamp(),
+      pushBubble(
+        "victim",
+        isCheckpoint ? ACCEPTANCE_TEXT : pool.victim[vi % pool.victim.length],
         n,
-        tier,
-        checkpoint: isCheckpoint || undefined,
-      });
+        isCheckpoint
+      );
       vi++;
       n++;
       toggle = "you";
     } else {
-      items.push({
-        kind: "bubble",
-        speaker: "you",
-        text: pool.you[yi % pool.you.length],
-        t: stamp(),
-        n,
-        tier,
-      });
+      pushBubble("you", pool.you[yi % pool.you.length], n);
       yi++;
       n++;
-      // Tier C: increase "you" check-in frequency (extra you-message)
       if (n <= endN && yi % doubleEvery === 0) {
-        items.push({
-          kind: "bubble",
-          speaker: "you",
-          text: pool.you[(yi + 3) % pool.you.length],
-          t: stamp(),
-          n,
-          tier,
-        });
+        pushBubble("you", pool.you[(yi + 3) % pool.you.length], n);
         yi++;
         n++;
       }
       toggle = "victim";
     }
 
-    // Sprinkle system action badges
     if ((yi + vi) % 60 === 0 && actIdx < actions.length - 1) {
       actIdx++;
       items.push({ kind: "action", text: actions[actIdx] });
