@@ -711,6 +711,7 @@ const SectionPanel = forwardRef<HTMLElement, { section: SectionData; index: numb
                   text={item.text}
                   t={item.t}
                   n={item.n}
+                  sectionId={item.sectionId}
                   checkpoint={item.checkpoint}
                 />
               )
