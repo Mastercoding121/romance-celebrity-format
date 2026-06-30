@@ -10,8 +10,6 @@ import {
   ChevronDown,
   ShieldAlert,
   Star,
-  Camera,
-  Gift,
   Crown,
   Plane,
   Lock,
